@@ -125,14 +125,16 @@ train_nips_dataset = dataset.lmdbDataset(
     transform=dataset.resizeNormalize((opt.imgW, opt.imgH)),
     reverse=opt.BidirDecoder)
 assert train_nips_dataset
-train_cvpr_dataset = dataset.lmdbDataset(
-    root=opt.train_cvpr,
-    transform=dataset.resizeNormalize((opt.imgW, opt.imgH)),
-    reverse=opt.BidirDecoder)
-assert train_cvpr_dataset
+# train_cvpr_dataset = dataset.lmdbDataset(
+#     root=opt.train_cvpr,
+#     transform=dataset.resizeNormalize((opt.imgW, opt.imgH)),
+#     reverse=opt.BidirDecoder)
+# assert train_cvpr_dataset
 
-train_dataset = torch.utils.data.ConcatDataset(
-    [train_nips_dataset, train_cvpr_dataset])
+# train_dataset = torch.utils.data.ConcatDataset(
+#     [train_nips_dataset, train_cvpr_dataset])
+
+train_dataset = train_nips_dataset
 
 train_loader = torch.utils.data.DataLoader(
     train_dataset,
