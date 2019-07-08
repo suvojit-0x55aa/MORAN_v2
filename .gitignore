@@ -86,6 +86,7 @@ celerybeat-schedule
 .venv
 env/
 venv/
+py3env/
 ENV/
 env.bak/
 venv.bak/
@@ -105,3 +106,6 @@ venv.bak/
 
 # Model parameters
 demo.pth
+
+# Data
+data/

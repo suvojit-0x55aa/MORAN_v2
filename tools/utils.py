@@ -3,6 +3,7 @@ import torch.nn as nn
 from torch.autograd import Variable
 import collections
 
+
 class strLabelConverterForAttention(object):
     """Convert between str and label.
 
@@ -32,7 +33,8 @@ class strLabelConverterForAttention(object):
         for i in range(len(text_tmp)):
             text_result = ''
             for j in range(len(text_tmp[i])):
-                chara = text_tmp[i][j].lower() if self._ignore_case else text_tmp[i][j]
+                chara = text_tmp[i][
+                    j].lower() if self._ignore_case else text_tmp[i][j]
                 if chara not in self.alphabet:
                     if chara in self._out_of_list:
                         continue
@@ -91,20 +93,24 @@ class strLabelConverterForAttention(object):
         """
         if length.numel() == 1:
             length = length[0]
-            assert t.numel() == length, "text with length: {} does not match declared length: {}".format(t.numel(), length)
+            assert t.numel(
+            ) == length, "text with length: {} does not match declared length: {}".format(
+                t.numel(), length)
             return ''.join([self.alphabet[i] for i in t])
         else:
             # batch mode
-            assert t.numel() == length.sum(), "texts with length: {} does not match declared length: {}".format(t.numel(), length.sum())
+            assert t.numel() == length.sum(
+            ), "texts with length: {} does not match declared length: {}".format(
+                t.numel(), length.sum())
             texts = []
             index = 0
             for i in range(length.numel()):
                 l = length[i]
                 texts.append(
-                    self.decode(
-                        t[index:index + l], torch.LongTensor([l])))
+                    self.decode(t[index:index + l], torch.LongTensor([l])))
                 index += l
             return texts
+
 
 class averager(object):
     """Compute average for `torch.Variable` and `torch.Tensor`. """
@@ -133,6 +139,7 @@ class averager(object):
             res = self.sum / float(self.n_count)
         return res
 
+
 def loadData(v, data):
     major, _ = get_torch_version()
 
@@ -140,6 +147,7 @@ def loadData(v, data):
         v.resize_(data.size()).copy_(data)
     else:
         v.data.resize_(data.size()).copy_(data)
+
 
 def get_torch_version():
     """
