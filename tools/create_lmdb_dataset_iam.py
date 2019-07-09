@@ -10,7 +10,8 @@ def get_image_filenames(image_list_filename):
         for line in f:
             # Carve out the ground truth string and file path from lines like:
             # ./2697/6/466_MONIKER_49537.jpg 49537
-            filename = line.split(' ', 1)[0][2:]  # split off "./" and number
+            # filename = line.split(' ', 1)[0][2:]  # split off "./" and number
+            filename = os.path.basename(line.strip())
             filenames.append(filename)
     return filenames
 
@@ -22,7 +23,7 @@ def get_text_and_labels(filename):
     # Ground truth string lines embedded within base
     # filename between underscores
     # 2697/6/466_MONIKER_49537.jpg --> MONIKER
-    text = os.path.basename(filename).split('_', 2)[1]
+    text = os.path.basename(filename).split('_', 2)[1].split('.')[0]
 
     # Transform string text to sequence of indices using charset, e.g.,
     # MONIKER -> [12, 14, 13, 8, 10, 4, 17]
@@ -62,10 +63,10 @@ def gen_data(input_base_dir, image_list_filename, output_filebase):
 
 
 def main(argv=None):
-    gen_data('../data/images', 'annotation_train.txt',
+    gen_data('../data/IAMhand2printv5', 'train.txt',
              '../data/train')
-    gen_data('../data/images', 'annotation_val.txt', '../data/val')
-    gen_data('../data/images', 'annotation_test.txt', '../data/test')
+    gen_data('../data/IAMhand2printv5', 'val.txt', '../data/val')
+    gen_data('../data/IAMhand2printv5', 'test.txt', '../data/test')
 
 
 if __name__ == '__main__':
